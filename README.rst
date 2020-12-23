@@ -8,44 +8,24 @@ Local Setup
 
      pip install -r requirements/dev.txt
 
-Dokku setup
-===========
 
-#. Make sure that your SSH config for dokku is set up::
+Github pages setup
+==================
 
-     Host dokku
-       Hostname git.drkurup.com
-       User dokku
-       RequestTTY yes
+This is deployed to GH pages using the `docs folder on master branch` option. A CNAME file is
+created at the top level for the custom domain. HTTPS is enabled in GitHub. Two CNAME records are
+created at the registrar for `www` and `@`, both pointing to vkurup.github.io.
 
-#. create the app::
-
-     ssh dokku apps:create mydaddyji
-     ssh dokku apps:create mydaddyji-staging
-     ssh dokku git:set mydaddyji-staging deploy-branch develop
-
-#. add the dokku git remote for production::
-
-     git remote add prod dokku@git.drkurup.com:mydaddyji
-     git push prod master
-
-#. add the dokku git remote for staging::
-
-     git remote add staging dokku@git.drkurup.com:mydaddyji-staging
-     git push staging develop
+It takes a while for the pages to be built and for the cert to be issues, at least the
+first time.
 
 
 Site changes
 ============
 
-#. Make the changes in the `src` directory. Build the site and view it at localhost:9090::
+#. Make the changes in the ``src`` directory. Build the site (which will generate the
+   files in the ``docs`` directory) and view it at localhost:9090::
 
      complexity src
 
-#. When you're satisfied, commit to develop and push develop to staging::
-
-     git push staging develop
-
-#. When you're satisfied with staging, merge develop to master and push master to prod::
-
-     git push prod master
+#. When you're satisfied, commit to the changes to master and Github Pages will deploy it.
